@@ -9,9 +9,12 @@ export async function index(req, res, next) {
     const filterPrice = req.query.price;
     const filterTags = req.query.tags;
 
-    /* const page = parseInt(req.query.page) || 1;
-    const limit = parseInt(req.query.limit) || 3;
-    const startIndex = (page - 1) * limit; */
+    // Pagination
+    const limit = req.query.limit;
+    const skip = req.query.skip;
+
+    // Sort
+    const sort = req.query.sort;
 
     const filters = {
       owner: userId,
@@ -30,9 +33,7 @@ export async function index(req, res, next) {
       filters.tags = { $in: tagsArray };
     }
 
-    res.locals.products = await Product.find(filters);
-    /* .skip(startIndex)
-      .limit(limit); */
+    res.locals.products = await Product.showList(filters, limit, skip, sort);
 
     res.render("home");
   } catch (error) {
