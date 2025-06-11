@@ -5,7 +5,6 @@ import Product from "../models/Product.js";
 export function index(req, res, next) {
   res.locals.errorName = "";
   res.locals.errorPrice = "";
-  /* res.locals.errorImage = ""; */
 
   res.render("new-product");
 }
@@ -28,7 +27,6 @@ export async function createProduct(req, res, next) {
     if (!validation.isEmpty()) {
       res.locals.errorName = "";
       res.locals.errorPrice = "";
-      /* res.locals.errorImage = ""; */
 
       validation.array({ onlyFirstError: true }).forEach((validError) => {
         if (validError.path === "name") {
@@ -37,10 +35,6 @@ export async function createProduct(req, res, next) {
           res.locals.errorPrice = "Invalid price";
         }
       });
-
-      /* if (req.file === undefined) {
-                res.locals.errorImage = "Must upload an image"
-            } */
 
       res.render("new-product");
       return;

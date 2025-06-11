@@ -1,20 +1,41 @@
-import Product from '../models/Product.js'
+import Product from "../models/Product.js";
 
 export async function index(req, res, next) {
-    try {
-        const userId = req.session.userId
+  try {
+    const userId = req.session.userId;
 
-        const page = parseInt(req.query.page) || 1
-        const limit = parseInt(req.query.limit) || 3
-        const startIndex = (page - 1) * limit
+    // Filters
+    const filterName = req.query.name;
+    const filterPrice = req.query.price;
+    const filterTags = req.query.tags;
 
-        res.locals.products = await Product.find({ owner: userId }).skip(startIndex).limit(limit)
+    /* const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 3;
+    const startIndex = (page - 1) * limit; */
 
+    const filters = {
+      owner: userId,
+    };
 
-        
-        res.render('home')
-    } catch (error) {
-        next(error)
+    if (filterName) {
+      filters.name = new RegExp(`${filterName}`, "i"); // filter name that contains filterName
     }
-}
 
+    if (filterPrice) {
+      filters.price = filterPrice;
+    }
+
+    if (filterTags) {
+      const tagsArray = filterTags.split(",");
+      filters.tags = { $in: tagsArray };
+    }
+
+    res.locals.products = await Product.find(filters);
+    /* .skip(startIndex)
+      .limit(limit); */
+
+    res.render("home");
+  } catch (error) {
+    next(error);
+  }
+}
