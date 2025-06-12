@@ -8,6 +8,7 @@ import * as loginController from "./controllers/loginController.js";
 import * as productsController from "./controllers/productsController.js";
 import * as sessionManager from "./lib/sessionManager.js";
 import upload from "./lib/uploadConfigure.js";
+import i18n from "./lib/i18nConfigure.js";
 
 // connect with MongoDB database
 await connectMongoose();
@@ -29,6 +30,7 @@ app.use(express.json());
 
 app.use(sessionManager.middleware);
 app.use(sessionManager.useSessionInViews);
+app.use(i18n.init);
 
 // APPLICATION ROUTES
 app.get("/", homeController.index);

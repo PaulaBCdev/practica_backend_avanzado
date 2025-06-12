@@ -2,9 +2,11 @@
 
 <div class="container">
   <% if (!session.userId) { %> <% // contenido para usuarios NO logeados %>
-  <p><a href="/login">Login</a> to acces your products</p>
+  <p>
+    <a href="/login"><%= __('Login') %></a> <%= __('to acces your products') %>
+  </p>
   <% }else { %>
-  <h2 class="mt-4">Products</h2>
+  <h2 class="mt-4"><%= __('Products') %></h2>
   <div class="row row-cols-2 row-cols-md-4 g-2">
     <% products.forEach(product => { %>
     <div class="col">

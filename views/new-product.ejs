@@ -1,11 +1,11 @@
 <%- include('header.ejs') %>
 
 <div class="container">
-  <h1>New Product</h1>
+  <h1><%= __('New Product') %></h1>
 
   <form method="POST" enctype="multipart/form-data">
     <div class="mb-3">
-      <label for="productName" class="form-label">Name</label>
+      <label for="productName" class="form-label"><%= __('Name') %></label>
       <input
         type="text"
         name="name"
@@ -16,7 +16,7 @@
     </div>
 
     <div class="mb-3">
-      <label for="productPrice" class="form-label">Price</label>
+      <label for="productPrice" class="form-label"><%= __('Price') %></label>
       <input
         type="number"
         name="price"
@@ -27,7 +27,9 @@
     </div>
 
     <div class="mb-3">
-      <label for="productImage" class="form-label">Upload image</label>
+      <label for="productImage" class="form-label"
+        ><%= __('Upload image') %></label
+      >
       <input
         type="file"
         name="image"
@@ -38,7 +40,7 @@
     </div>
 
     <div class="mb-3">
-      <p class="mb-1">Tags</p>
+      <p class="mb-1"><%= __('Tags') %></p>
       <div class="form-check form-check-inline">
         <input
           class="form-check-input"
@@ -47,7 +49,9 @@
           value="gaming"
           id="tagGaming"
         />
-        <label class="form-check-label" for="tagGaming"> Gaming </label>
+        <label class="form-check-label" for="tagGaming">
+          <%= __('Gaming') %>
+        </label>
       </div>
       <div class="form-check form-check-inline">
         <input
@@ -58,7 +62,9 @@
           id="tagClothes"
           checked
         />
-        <label class="form-check-label" for="tagClothes"> Clothes </label>
+        <label class="form-check-label" for="tagClothes">
+          <%= __('Clothes') %>
+        </label>
       </div>
       <div class="form-check form-check-inline">
         <input
@@ -69,7 +75,9 @@
           id="tagToys"
           checked
         />
-        <label class="form-check-label" for="tagToys"> Toys </label>
+        <label class="form-check-label" for="tagToys">
+          <%= __('Toys') %>
+        </label>
       </div>
       <div class="form-check form-check-inline">
         <input
@@ -80,11 +88,13 @@
           id="tagOthers"
           checked
         />
-        <label class="form-check-label" for="tagOthers"> Others </label>
+        <label class="form-check-label" for="tagOthers">
+          <%= __('Others') %>
+        </label>
       </div>
     </div>
 
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="submit" class="btn btn-primary"><%= __('Submit') %></button>
 
     <p><%= errorName %></p>
     <p><%= errorPrice %></p>
