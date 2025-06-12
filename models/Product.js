@@ -1,11 +1,11 @@
 import mongoose, { Schema } from "mongoose";
 
 const productSchema = new Schema({
-  name: String,
+  name: { type: String, index: true },
   owner: { type: Schema.Types.ObjectId, ref: "User", index: true },
-  price: Number,
+  price: { type: Number, index: true },
   image: String,
-  tags: [String],
+  tags: { type: [String], index: true },
 });
 
 productSchema.statics.showList = function (filters, limit, skip, sort) {

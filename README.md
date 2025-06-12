@@ -1,6 +1,6 @@
-# NodePop 
+# NodePop
 
-NodePop is a web application where users can post ads to sell products. 
+NodePop is a web application where users can post ads to sell products.
 Each user can only view and manage their own products, which allows to practice authentication and permissions management in a backend with Node.js.
 
 ## Database
@@ -14,6 +14,14 @@ Install dependencies with:
 ```sh
 npm install
 ```
+
+Copy enviroment Variables example to .env:
+
+```sh
+cp .env.example .env
+```
+
+Review your new .env values to match your configuration.
 
 On first deploy you can use the next command to initialize the database:
 
@@ -92,6 +100,3 @@ GET /products/delete/:productId
 - Bcrypt
 - Multer
 - express-validator
-
-
-
