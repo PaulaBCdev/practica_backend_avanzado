@@ -15,9 +15,11 @@
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
     />
   </head>
+
   <body>
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
       <div class="container-fluid">
+        <!-- App Name -->
         <a class="navbar-brand" href="/"><%= appName %></a>
         <button
           class="navbar-toggler"
@@ -30,7 +32,10 @@
         >
           <span class="navbar-toggler-icon"></span>
         </button>
+
+        <!-- Navbar BTNS -->
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <!-- New Product -->
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <% if (session.userId) { %>
             <li class="nav-item">
@@ -40,6 +45,15 @@
             </li>
             <% } %>
           </ul>
+
+          <!-- Choose language -->
+          <div>
+            <% getLocales().forEach( locale => { %>
+            <a href="/change-locale/<%= locale %>"><%= locale %></a>
+            <% }) %>
+          </div>
+
+          <!-- Login / Logout -->
           <% if (!session.userId) { %>
           <a class="btn btn-success" href="/login"><%= __('Login') %></a>
           <% }else { %>

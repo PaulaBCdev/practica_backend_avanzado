@@ -6,9 +6,11 @@ import connectMongoose from "./lib/connectMongoose.js";
 import * as homeController from "./controllers/homeController.js";
 import * as loginController from "./controllers/loginController.js";
 import * as productsController from "./controllers/productsController.js";
+import * as localeController from "./controllers/localeController.js";
 import * as sessionManager from "./lib/sessionManager.js";
 import upload from "./lib/uploadConfigure.js";
 import i18n from "./lib/i18nConfigure.js";
+import cookieParser from "cookie-parser";
 
 // connect with MongoDB database
 await connectMongoose();
@@ -22,15 +24,20 @@ app.set("view engine", "ejs");
 
 app.locals.appName = "NodePop";
 
-// MIDDLEWARES
+// GENERAL MIDDLEWARES
 app.use(logger("dev"));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(import.meta.dirname, "public")));
 app.use(express.json());
 
+// APPLICATION MIDDLEWARES
+app.use(cookieParser());
+
 app.use(sessionManager.middleware);
 app.use(sessionManager.useSessionInViews);
+
 app.use(i18n.init);
+app.get("/change-locale/:locale", localeController.changeLocale);
 
 // APPLICATION ROUTES
 app.get("/", homeController.index);
