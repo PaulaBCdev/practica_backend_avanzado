@@ -49,7 +49,9 @@
           <!-- Choose language -->
           <div>
             <% getLocales().forEach( locale => { %>
-            <a href="/change-locale/<%= locale %>"><%= locale %></a>
+            <a href="/change-locale/<%= locale %>">
+              <img src="/icons/<%= locale %>.png" alt="<%= locale %>" />
+            </a>
             <% }) %>
           </div>
 
