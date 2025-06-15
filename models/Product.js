@@ -8,7 +8,7 @@ const productSchema = new Schema({
   tags: { type: [String], index: true },
 });
 
-productSchema.statics.showList = function (filters, limit, skip, sort) {
+productSchema.statics.showList = function (filters, limit, skip, sort, fields) {
   const query = Product.find(filters);
   query.limit(limit);
   query.skip(skip);
@@ -16,6 +16,7 @@ productSchema.statics.showList = function (filters, limit, skip, sort) {
     query.collation({ locale: "en", strength: 1 });
   }
   query.sort(sort);
+  query.select(fields);
   return query.exec();
 };
 

@@ -14,6 +14,9 @@ export async function productsList(req, res, next) {
     // Sort
     const sort = req.query.sort;
 
+    // Fields selection
+    const fields = req.query.fields;
+
     const filters = {
       //owner: userId,
     };
@@ -31,7 +34,7 @@ export async function productsList(req, res, next) {
       filters.tags = { $all: tagsArray };
     }
 
-    const products = await Product.showList(filters, limit, skip, sort);
+    const products = await Product.showList(filters, limit, skip, sort, fields);
 
     res.json({ results: products });
   } catch (error) {
