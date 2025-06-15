@@ -30,7 +30,7 @@ export async function index(req, res, next) {
 
     if (filterTags) {
       const tagsArray = filterTags.split(",");
-      filters.tags = { $in: tagsArray };
+      filters.tags = { $all: tagsArray };
     }
 
     res.locals.products = await Product.showList(filters, limit, skip, sort);
