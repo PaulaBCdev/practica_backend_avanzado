@@ -1,4 +1,6 @@
 import Product from "../../models/Product.js";
+import { unlink } from "node:fs/promises";
+import path from "node:path";
 
 export async function productsList(req, res, next) {
   try {
@@ -75,6 +77,51 @@ export async function newProduct(req, res, next) {
     const savedProduct = await product.save();
 
     res.status(201).json({ result: savedProduct });
+  } catch (error) {
+    next(error);
+  }
+}
+
+export async function updateProduct(req, res, next) {
+  try {
+    const productId = req.params.productId;
+    const productData = req.body;
+    productData.image = req.file?.filename;
+
+    const updatedProduct = await Product.findByIdAndUpdate(
+      productId,
+      productData,
+      { new: true }
+    );
+
+    res.json({ result: updatedProduct });
+  } catch (error) {
+    next(error);
+  }
+}
+
+export async function deleteProduct(req, res, next) {
+  try {
+    const productId = req.params.productId;
+
+    // delete file if exists
+    const product = await Product.findById(productId);
+    if (Product.image) {
+      await unlink(
+        path.join(
+          import.meta.dirname,
+          "..",
+          "..",
+          "public",
+          "images",
+          product.image
+        )
+      );
+    }
+
+    await Product.deleteOne({ _id: productId });
+
+    res.json();
   } catch (error) {
     next(error);
   }

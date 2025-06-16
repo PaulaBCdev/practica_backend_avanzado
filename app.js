@@ -39,6 +39,12 @@ app.post(
   upload.single("image"),
   apiProductsController.newProduct
 );
+app.put(
+  "/api/products/:productId",
+  upload.single("image"),
+  apiProductsController.updateProduct
+);
+app.delete("/api/products/:productId", apiProductsController.deleteProduct);
 
 // WEB_APPLICATION MIDDLEWARES
 app.use(cookieParser());

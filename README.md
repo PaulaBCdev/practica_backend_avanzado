@@ -74,6 +74,63 @@ GET /api/products
 }
 ```
 
+### Show a product
+
+GET /api/products/:productId
+
+```json
+{
+  "result": {
+    "_id": "68480d374133034327b10392",
+    "name": "Mando de PlayStation",
+    "owner": "68480d374133034327b1038c",
+    "price": 12,
+    "image": "s-l1200.jpg",
+    "tags": ["videojuegos", "gaming"],
+    "__v": 0
+  }
+}
+```
+
+### Create new product
+
+POST /api/products
+
+```json
+{
+  "result": {
+    "name": "producto con imagen",
+    "price": 12,
+    "tags": ["ju", "an"],
+    "_id": "684ffcae77f8270d5ea384c4",
+    "image": "1750072494174-e5446efbdff2e7efa55381ae50cc853c.jpg",
+    "__v": 0
+  }
+}
+```
+
+### Update product
+
+PUT /api/products/:productId
+
+```json
+{
+  "result": {
+    "_id": "68480d374133034327b10392",
+    "name": "Mando de PlayStation",
+    "owner": "68480d374133034327b1038c",
+    "price": 45,
+    "image": "s-l1200.jpg",
+    "tags": ["videojuegos", "gaming"],
+    "__v": 0
+  }
+}
+```
+
+### Delete product
+
+DELETE /api/products/:productId
+
 ## Main endpoints
 
 ### Not proptected endpoints
