@@ -33,6 +33,12 @@ app.use(express.json());
 
 // API ROUTES
 app.get("/api/products", apiProductsController.productsList);
+app.get("/api/products/:productId", apiProductsController.getOneProduct);
+app.post(
+  "/api/products",
+  upload.single("image"),
+  apiProductsController.newProduct
+);
 
 // WEB_APPLICATION MIDDLEWARES
 app.use(cookieParser());
@@ -82,6 +88,13 @@ app.use((err, req, res, next) => {
   }
 
   res.status(err.status || 500);
+
+  // API errors -> response in JSON
+  if (req.url.startsWith("/api/")) {
+    res.json({ error: err.message });
+    return;
+  }
+
   res.locals.message = err.message;
   res.locals.error = process.env.NODEAPP_ENV === "development" ? err : {};
 
