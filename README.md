@@ -43,6 +43,37 @@ Start the server in production:
 npm start
 ```
 
+## API
+
+Base URL: http://localhost:3000/api
+
+### Products list
+
+GET /api/products
+
+```json
+{
+  "results": [
+    {
+      "_id": "684988723021af33bc7ec156",
+      "name": "Nintengo",
+      "owner": "68480d374133034327b1038c",
+      "price": 500,
+      "tags": ["gaming", "toys"],
+      "__v": 0
+    },
+    {
+      "_id": "684c121288cd779e4f8515c6",
+      "name": "Todos los tags",
+      "owner": "68480d374133034327b1038c",
+      "price": 4,
+      "tags": ["gaming", "clothes", "toys", "others"],
+      "__v": 0
+    }
+  ]
+}
+```
+
 ## Main endpoints
 
 ### Not proptected endpoints

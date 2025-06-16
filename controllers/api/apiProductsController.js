@@ -17,6 +17,9 @@ export async function productsList(req, res, next) {
     // Fields selection
     const fields = req.query.fields;
 
+    // With total count (optional)
+    const withCount = req.query.count === "true";
+
     const filters = {
       //owner: userId,
     };
@@ -35,8 +38,14 @@ export async function productsList(req, res, next) {
     }
 
     const products = await Product.showList(filters, limit, skip, sort, fields);
+    const result = { results: products };
 
-    res.json({ results: products });
+    if (withCount) {
+      const count = await Product.countDocuments(filters);
+      result.count = count;
+    }
+
+    res.json(result);
   } catch (error) {
     next(error);
   }
