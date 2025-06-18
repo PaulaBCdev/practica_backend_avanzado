@@ -47,6 +47,16 @@ npm start
 
 Base URL: http://localhost:3000/api
 
+### API login
+
+POST /api/login
+
+```json
+{
+  "tokenJWT": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.<payload>.<firma>"
+}
+```
+
 ### Products list
 
 GET /api/products

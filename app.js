@@ -8,11 +8,13 @@ import * as loginController from "./controllers/loginController.js";
 import * as productsController from "./controllers/productsController.js";
 import * as localeController from "./controllers/localeController.js";
 import * as apiProductsController from "./controllers/api/apiProductsController.js";
+import * as apiLoginController from "./controllers/api/apiLoginController.js";
 import * as sessionManager from "./lib/sessionManager.js";
 import upload from "./lib/uploadConfigure.js";
 import i18n from "./lib/i18nConfigure.js";
 import cookieParser from "cookie-parser";
 import swaggerMiddleware from "./lib/swaggerMiddleware.js";
+import * as jwtAuth from "./lib/jwtAuthMiddleware.js";
 
 // connect with MongoDB database
 await connectMongoose();
@@ -33,19 +35,30 @@ app.use(express.static(path.join(import.meta.dirname, "public")));
 app.use(express.json());
 
 // API ROUTES
-app.get("/api/products", apiProductsController.productsList);
-app.get("/api/products/:productId", apiProductsController.getOneProduct);
+app.post("/api/login", apiLoginController.loginJWT);
+app.get("/api/products", jwtAuth.guard, apiProductsController.productsList);
+app.get(
+  "/api/products/:productId",
+  jwtAuth.guard,
+  apiProductsController.getOneProduct
+);
 app.post(
   "/api/products",
+  jwtAuth.guard,
   upload.single("image"),
   apiProductsController.newProduct
 );
 app.put(
   "/api/products/:productId",
+  jwtAuth.guard,
   upload.single("image"),
   apiProductsController.updateProduct
 );
-app.delete("/api/products/:productId", apiProductsController.deleteProduct);
+app.delete(
+  "/api/products/:productId",
+  jwtAuth.guard,
+  apiProductsController.deleteProduct
+);
 
 // WEB_APPLICATION MIDDLEWARES
 app.use(cookieParser());
