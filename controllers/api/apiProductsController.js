@@ -1,9 +1,12 @@
 import Product from "../../models/Product.js";
 import { unlink } from "node:fs/promises";
 import path from "node:path";
+import createError from "http-errors";
 
 export async function productsList(req, res, next) {
   try {
+    const userId = req.apiUserId;
+
     // Filters
     const filterName = req.query.name;
     const filterPrice = req.query.price;
@@ -23,7 +26,7 @@ export async function productsList(req, res, next) {
     const withCount = req.query.count === "true";
 
     const filters = {
-      //owner: userId,
+      owner: userId,
     };
 
     if (filterName) {
@@ -56,8 +59,9 @@ export async function productsList(req, res, next) {
 export async function getOneProduct(req, res, next) {
   try {
     const productId = req.params.productId;
+    const userId = req.apiUserId;
 
-    const product = await Product.findById(productId);
+    const product = await Product.findOne({ _id: productId, owner: userId });
 
     res.json({ result: product });
   } catch (error) {
@@ -68,10 +72,12 @@ export async function getOneProduct(req, res, next) {
 export async function newProduct(req, res, next) {
   try {
     const productData = req.body;
+    const userId = req.apiUserId;
 
     // create product in memory
     const product = new Product(productData);
     product.image = req.file?.filename;
+    product.owner = userId;
 
     // save product
     const savedProduct = await product.save();
@@ -85,11 +91,13 @@ export async function newProduct(req, res, next) {
 export async function updateProduct(req, res, next) {
   try {
     const productId = req.params.productId;
+    const userId = req.apiUserId;
+
     const productData = req.body;
     productData.image = req.file?.filename;
 
-    const updatedProduct = await Product.findByIdAndUpdate(
-      productId,
+    const updatedProduct = await Product.findOneAndUpdate(
+      { _id: productId, owner: userId },
       productData,
       { new: true }
     );
@@ -103,9 +111,27 @@ export async function updateProduct(req, res, next) {
 export async function deleteProduct(req, res, next) {
   try {
     const productId = req.params.productId;
+    const userId = req.apiUserId;
 
-    // delete file if exists
     const product = await Product.findById(productId);
+
+    // check if product exists
+    if (!product) {
+      console.log(
+        `WARNING! user ${userId} is trying to delete non existing products`
+      );
+      return next(createError(404));
+    }
+
+    // check product's owner
+    if (product.owner.toString() !== userId) {
+      console.log(
+        `WARNING! user ${userId} is trying to delete other users' products!!!`
+      );
+      return next(createError(401));
+    }
+
+    // if there is image, delete it
     if (Product.image) {
       await unlink(
         path.join(
@@ -119,6 +145,7 @@ export async function deleteProduct(req, res, next) {
       );
     }
 
+    // delete product
     await Product.deleteOne({ _id: productId });
 
     res.json();
