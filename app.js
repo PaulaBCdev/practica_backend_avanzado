@@ -12,6 +12,7 @@ import * as sessionManager from "./lib/sessionManager.js";
 import upload from "./lib/uploadConfigure.js";
 import i18n from "./lib/i18nConfigure.js";
 import cookieParser from "cookie-parser";
+import swaggerMiddleware from "./lib/swaggerMiddleware.js";
 
 // connect with MongoDB database
 await connectMongoose();
@@ -73,6 +74,7 @@ app.get(
   sessionManager.guard,
   productsController.deleteProduct
 );
+app.use("/api-doc", swaggerMiddleware);
 
 // catch 404 and send error
 app.use((req, res, next) => {

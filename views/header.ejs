@@ -35,12 +35,18 @@
 
         <!-- Navbar BTNS -->
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <!-- New Product -->
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <!-- New Product -->
             <% if (session.userId) { %>
             <li class="nav-item">
               <a class="nav-link" href="/products/new"
                 ><%= __('New Product') %></a
+              >
+            </li>
+            <!-- API Documentation -->
+            <li class="nav-item">
+              <a class="nav-link" href="/api-doc" target="_blank"
+                ><%= __('API Documentation') %></a
               >
             </li>
             <% } %>
