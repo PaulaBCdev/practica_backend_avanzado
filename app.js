@@ -2,6 +2,7 @@ import path from "node:path";
 import express from "express";
 import createError from "http-errors";
 import logger from "morgan";
+import cors from "cors";
 import connectMongoose from "./lib/connectMongoose.js";
 import * as homeController from "./controllers/homeController.js";
 import * as loginController from "./controllers/loginController.js";
@@ -30,6 +31,7 @@ app.locals.appName = "NodePop";
 
 // GENERAL MIDDLEWARES
 app.use(logger("dev"));
+app.use(cors());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(import.meta.dirname, "public")));
 app.use(express.json());
