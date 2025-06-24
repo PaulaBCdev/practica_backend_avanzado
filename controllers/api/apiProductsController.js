@@ -70,6 +70,12 @@ export async function getOneProduct(req, res, next) {
   }
 }
 
+// Thumbnail requester
+const requester = new cote.Requester({
+  name: "Create Thumbnail",
+  namespace: "NodeApp",
+});
+
 export async function newProduct(req, res, next) {
   try {
     const productData = req.body;
@@ -85,12 +91,15 @@ export async function newProduct(req, res, next) {
 
     // create thumbnail
     if (product.image) {
-      const requester = new cote.Requester({ name: "Create Thumbnail" });
-
+      const fullImagePath = path.join(
+        process.cwd(),
+        "public",
+        "images",
+        product.image
+      );
       const event = {
         type: "create-thumbnail",
-        original: product.image,
-        storedIn: "../public/images/",
+        originalPath: fullImagePath,
       };
 
       requester.send(event, (result) => {
