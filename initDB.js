@@ -29,7 +29,7 @@ async function initUsers() {
   // create users
   const insertResult = await User.insertMany([
     { email: "admin@example.com", password: await User.hashPassword("1234") },
-    { email: "user@example.com", password: await User.hashPassword("1234") },
+    { email: "user1@example.com", password: await User.hashPassword("1234") },
   ]);
   console.log(`Inserted ${insertResult.length} users.`);
 }
@@ -42,7 +42,7 @@ async function initProducts() {
   // search users to know which one posted which product
   const [admin, user] = await Promise.all([
     User.findOne({ email: "admin@example.com" }),
-    User.findOne({ email: "user@example.com" }),
+    User.findOne({ email: "user1@example.com" }),
   ]);
 
   // create products

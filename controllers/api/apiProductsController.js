@@ -1,6 +1,7 @@
 import Product from "../../models/Product.js";
 import { unlink } from "node:fs/promises";
 import path from "node:path";
+import cote from "cote";
 import createError from "http-errors";
 
 export async function productsList(req, res, next) {
@@ -81,6 +82,21 @@ export async function newProduct(req, res, next) {
 
     // save product
     const savedProduct = await product.save();
+
+    // create thumbnail
+    if (product.image) {
+      const requester = new cote.Requester({ name: "Create Thumbnail" });
+
+      const event = {
+        type: "create-thumbnail",
+        original: product.image,
+        storedIn: "../public/images/",
+      };
+
+      requester.send(event, (result) => {
+        console.log(result);
+      });
+    }
 
     res.status(201).json({ result: savedProduct });
   } catch (error) {

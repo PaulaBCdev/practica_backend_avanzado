@@ -181,49 +181,6 @@ paths:
                 $ref: "#/components/schemas/Error"
       security:
         - apiAuth: []
-    put:
-      tags:
-        - products
-      summary: Update product info.
-      description: This can only be done if you're the product's owner and you're logged.
-      parameters:
-        - name: productId
-          in: path
-          required: true
-          description: ID of the product to update
-          schema:
-            type: string
-      requestBody:
-        required: true
-        description: Updated product data.
-        content:
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/ProductUpdate'
-      responses:
-        '200':
-          description: Product updated successfully
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  result:
-                    $ref: '#/components/schemas/Product'
-        '400':
-          description: Invalid input
-        '401':
-          description: Unauthorized
-        '404':
-          description: Product not found
-        default:
-          description: Unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-      security:
-        - apiAuth: []
     delete:
       tags:
         - products
@@ -236,22 +193,22 @@ paths:
           required: true
           schema:
             type: string
-      responses: 
-      '200':
+      responses:
+      "200":
         description: Product deleted
-      '404':
+      "404":
         description: Invalid ID
-      '401':
+      "401":
         description: Unauthorized
       default:
-          description: Unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+        description: Unexpected error
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Error"
       security:
         - apiAuth: []
-    
+
 components:
   schemas:
     User:
