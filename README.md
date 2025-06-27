@@ -3,6 +3,10 @@
 NodePop is a web application where users can post ads to sell products.
 Each user can only view and manage their own products, which allows to practice authentication and permissions management in a backend with Node.js.
 
+## NPM Package
+
+vowel-changer: <https://www.npmjs.com/package/vowel-changer>
+
 ## Database
 
 The database created for this project is called **'nodepop'**. If you'd like to use your own database, you can change the name in `/lib/connectMongoose.js`.
