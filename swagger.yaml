@@ -14,14 +14,14 @@ externalDocs:
   description: Find out more about Swagger
   url: https://swagger.io
 servers:
-  - url: http://localhost:3000/api
+  - url: http://localhost:3000
 tags:
   - name: login
     description: Login to access your ptoducts
   - name: products
     description: Everything about your Products
 paths:
-  /login:
+  /api/login:
     post:
       tags:
         - login
@@ -45,7 +45,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
-  /products:
+  /api/products:
     get:
       tags:
         - products
@@ -103,7 +103,7 @@ paths:
                 $ref: "#/components/schemas/Error"
       security:
         - apiAuth: []
-  /products/{productId}:
+  /api/products/{productId}:
     get:
       tags:
         - products
@@ -138,6 +138,7 @@ paths:
                 $ref: "#/components/schemas/Error"
       security:
         - apiAuth: []
+
     put:
       tags:
         - products
@@ -152,9 +153,9 @@ paths:
             type: string
       requestBody:
         required: true
-        description: Updated product data.
+        description: Due to a bug, press 'Reset' for the endpoint to function correctly.
         content:
-          application/x-www-form-urlencoded:
+          multipart/form-data:
             schema:
               $ref: "#/components/schemas/ProductUpdate"
       responses:
@@ -194,21 +195,20 @@ paths:
           schema:
             type: string
       responses:
-      "200":
-        description: Product deleted
-      "404":
-        description: Invalid ID
-      "401":
-        description: Unauthorized
-      default:
-        description: Unexpected error
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/Error"
+        "200":
+          description: Product deleted
+        "404":
+          description: Invalid ID
+        "401":
+          description: Unauthorized
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
       security:
         - apiAuth: []
-
 components:
   schemas:
     User:
@@ -220,7 +220,7 @@ components:
         email:
           type: string
           format: email
-          example: example@email.com
+          example: example@example.com
         password:
           type: string
           format: password
@@ -230,25 +230,19 @@ components:
       properties:
         _id:
           type: string
-          example: "68480d374133034327b10392"
         name:
           type: string
-          example: "Mando de PlayStation"
         owner:
           type: string
-          example: "68480d374133034327b1038c"
         price:
           type: number
-          example: 45
         image:
           type: string
-          example: "s-l1200.jpg"
           nullable: true
         tags:
           type: array
           items:
             type: string
-            example: "gaming"
         __v:
           type: integer
           example: 0
@@ -261,10 +255,8 @@ components:
       properties:
         name:
           type: string
-          example: "Nintengo"
         price:
           type: number
-          example: 500
         tags:
           type: array
           minItems: 1
@@ -275,11 +267,9 @@ components:
               - clothes
               - toys
               - others
-            example: ["gaming", "toys"]
         image:
           type: string
           nullable: true
-          example: "imagen.jpg"
     ProductUpdate:
       type: object
       properties:
@@ -302,6 +292,7 @@ components:
         image:
           type: string
           nullable: true
+
     ApiResponse:
       type: object
       properties:
@@ -324,24 +315,6 @@ components:
       required:
         - code
         - message
-  requestBodies:
-    Pet:
-      description: Pet object that needs to be added to the store
-      content:
-        application/json:
-          schema:
-            $ref: "#/components/schemas/Pet"
-        application/xml:
-          schema:
-            $ref: "#/components/schemas/Pet"
-    UserArray:
-      description: List of user object
-      content:
-        application/json:
-          schema:
-            type: array
-            items:
-              $ref: "#/components/schemas/User"
   securitySchemes:
     apiAuth:
       type: apiKey

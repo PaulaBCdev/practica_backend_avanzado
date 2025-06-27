@@ -141,6 +141,14 @@ PUT /api/products/:productId
 }
 ```
 
+#### Swagger bug in PUT endpoint
+
+It seems that there is a bug in Swagger's PUT endpoints that does not allow fields to be left blank. For example, if you run the endpoint and leave the name field blank, the product data is updated and the name changes to 'string'.
+
+Therefore, when testing the PUT endpoint in the Swagger documentation, after clicking the 'Try it out' button, click 'Reset' to enable the boxes that allow you to send empty values.
+
+If you want to make a PUT query immediately after the first one, first click 'Cancel' and repeat the same procedure as for your first query.
+
 ### Delete product
 
 DELETE /api/products/:productId
