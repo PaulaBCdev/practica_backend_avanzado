@@ -3,6 +3,10 @@
 NodePop is a web application where users can post ads to sell products.
 Each user can only view and manage their own products, which allows to practice authentication and permissions management in a backend with Node.js.
 
+## URL
+Módulo Backend: <https://backendmod.duckdns.org/>
+Módulo React: 50.19.158.24
+
 ## NPM Package
 
 vowel-changer: <https://www.npmjs.com/package/vowel-changer>
